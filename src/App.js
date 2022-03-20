@@ -7,6 +7,7 @@ import Login from './pages/Auth/Login';
 import { useAuth } from './contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Register from './pages/Auth/Register';
 
 
 function App() {
@@ -98,6 +99,8 @@ function App() {
           <Route path='/add' element={<Add />} />
           <Route path='/viewAll' element={<ViewAll />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+
         </Routes>
       </div>
     </div>
