@@ -1,13 +1,15 @@
 import './App.css';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
-import Add from './pages/Add';
+import Add from './pages/User/Add';
 import ViewAll from './pages/ViewAll';
 import Login from './pages/Auth/Login';
 import { useAuth } from './contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Register from './pages/Auth/Register';
+import ViewUser from './pages/User/ViewUser';
+import Edit from './pages/User/Edit';
 
 
 function App() {
@@ -52,8 +54,14 @@ function App() {
     }
   }, []);
 
-  function handleClick() {
-    loggedIn ? navigate('/logout') : navigate('/login');
+  function logout() {
+    localStorage.removeItem('jwt');
+    setAuth({
+      username: '',
+      role: ''
+    });
+    setLoggedIn(false);
+    navigate('/login');
   }
 
   return (
@@ -63,7 +71,17 @@ function App() {
         <header class="navbar  justify-content-between">
           <Link to="/"><img class="logo" src="https://uskudar.edu.tr/assets/kurumsal/logo-en/png/uskudar-university-logo.png" /></Link>
           <h5 class="text-light">Uskudar University Address Book</h5>
-          <button class="btn btn-info my-2 my-sm-0" onClick={handleClick}>{loggedIn ? "Log out" : "Login"}</button>
+          {
+            loggedIn && <button class="btn btn-info my-2 my-sm-0" onClick={logout}>Logout</button>
+
+          }
+          {
+            !loggedIn && <div className='d-flex flex-row'>
+              <button class="btn btn-info my-2 my-sm-0" onClick={() => navigate('/login')}>Login</button>
+              <button class="btn btn-info my-2 my-sm-0 ml-3" onClick={() => navigate('/register')}>Register</button>
+            </div>
+
+          }
         </header>
 
         {/*  -- NAVBAR -- */}
@@ -100,7 +118,8 @@ function App() {
           <Route path='/viewAll' element={<ViewAll />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-
+          <Route path='/user/:username' element={<ViewUser />} />
+          <Route path='/user/edit/:username' element={<Edit />} />
         </Routes>
       </div>
     </div>

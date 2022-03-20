@@ -10,6 +10,7 @@ import AuthProvider from './contexts/AuthContext';
 axios.defaults.baseURL = "https://address-book-system-rest.herokuapp.com/";
 // axios.defaults.baseURL = "http://localhost:8080";
 axios.defaults.withCredentials = true;
+axios.defaults.validateStatus = () => true;
 
 axios.interceptors.request.use(function (config) {
   var jwt = localStorage.getItem('jwt');

@@ -12,10 +12,11 @@ const Login = props => {
   async function handleSubmit(e) {
     e.preventDefault();
     setMessage('');
+    let result;
+    await axios.post('api/auth/login', { username, password })
+      .catch(e => { console.log(e); setMessage(e.message) }).then(res => result = res);
 
-    const result = await axios.post('api/auth/login', { username, password });
-
-    if (result.data) {
+    if (result && result.data) {
       if (result.data.status === "OK") {
         setAuth({
           username: result.data.username,
@@ -27,7 +28,7 @@ const Login = props => {
 
         return;
       }
-
+      console.log(result)
       setMessage(result.data.message);
 
       return;

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import createTableElements from "../components/table";
+import createTableElements from "../methods/table";
 import { useAuth } from "../contexts/AuthContext";
 
 const Home = props => {
@@ -28,6 +28,11 @@ const Home = props => {
 
 
   useEffect(async () => {
+    await getUser()
+  }, [auth]);
+
+
+  async function getUser() {
     let username = auth.username;
 
     if (username != '') {
@@ -37,13 +42,12 @@ const Home = props => {
         .then(res => response = res)
         .catch(x => console.log(x));
 
-      console.log(response);
       if (response && response.status === 200) {
         setUser(response.data);
         setTimetables(createTableElements(response.data.timeTable));
       }
     }
-  }, [auth]);
+  }
 
 
   return (

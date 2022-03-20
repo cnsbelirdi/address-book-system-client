@@ -30,7 +30,6 @@ function createTableElements(tableElements) {
     }
   });
 
-  console.log(groupBy(allTableElements, (x) => x.hour));
   return groupBy(allTableElements, (x) => x.hour);
 }
 
