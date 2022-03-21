@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const ViewAll = props => {
 
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
 
   useEffect(async () => {
     let response;
@@ -53,7 +55,7 @@ const ViewAll = props => {
                     <td>{user.phoneNo}</td>
                     <td>{user.officeNo}</td>
                     <td><button class="btn btn-info my-2 my-sm-0" onClick={() => navigate("/user/" + user.username)}>View</button></td>
-                    <td><button class="btn btn-danger my-2 my-sm-0" type="submit" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
+                    <td><button class="btn btn-danger my-2 my-sm-0" type="submit" hidden={auth.role != "ROLE_HUMAN_RESOURCES"}>Delete</button></td>
                   </tr>);
                 })
               }
