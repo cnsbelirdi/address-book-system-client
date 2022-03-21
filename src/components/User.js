@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from 'yup';
 import ValidationLabel from "./ValidationLabel";
+import { useAuth } from "../contexts/AuthContext";
 
 export const EDIT_URL = {
   url: "api/book_user/",
@@ -26,6 +27,7 @@ export const VIEW_URL = {
 const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL, title = "Register" }) => {
   const [timeTable, setTimeTable] = useState([]);
   const [course, setCourse] = useState('');
+  const [auth, setAuth] = useAuth();
   const [day, setDay] = useState(0);
   const [time, setTime] = useState('');
   const { username } = useParams();
@@ -33,9 +35,9 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
     "name": "",
     "username": "",
     "password": "",
-    "role": "",
-    "department": "",
-    "position": "",
+    "role": "Student",
+    "department": "Department1",
+    "position": "Position1",
     "phoneNumber": 0,
     "email": "",
     "officeNo": "",
@@ -110,10 +112,8 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
         className: course,
         label: 'SMP-101' // sample
       }
-      console.log(newTime);
 
       setTimeTable([newTime, ...timeTable]);
-      console.log(timeTable);
     }
   }
 
@@ -127,11 +127,12 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
     <Formik
       enableReinitialize={true}
       initialValues={initialValues}
-
       validationSchema={UserSchema}
       onSubmit={async values => {
         // event.preventDefault();
         if (editMode) {
+          values.timeTable = timeTable;
+
           if (url.type == ADD_URL.type || url.type == REGISTER_URL.type) {
             let result;
 
@@ -140,8 +141,15 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
               .catch(e => console.log(e));
 
             if (result.status == 200) {
-              localStorage.setItem('jwt', "Bearer " + result.data.jwt);
-              navigate('/');
+              if (url.type == REGISTER_URL.type) {
+                localStorage.setItem('jwt', "Bearer " + result.data.jwt);
+                setAuth({
+                  username: values.username,
+                  role: values.role
+                });
+                navigate('/');
+                return;
+              }
             }
           }
           else {
@@ -153,6 +161,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
 
             console.log(result)
           }
+          navigate('/viewAll');
         }
       }}
     >
@@ -193,7 +202,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                     <select className="form-control" disabled={!editMode}
                       value={values.role}
                       name="role" id="role" onChange={handleChange}>
-                      <option>Student</option>
+                      <option defaultValue>Student</option>
                       <option>Employee</option>
                       <option>Human Resources</option>
                     </select>
@@ -207,7 +216,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                     <select className="form-control" name="department" disabled={!editMode}
                       value={values.department}
                       id="department" onChange={handleChange}>
-                      <option>Department1</option>
+                      <option defaultValue>Department1</option>
                       <option>Department2</option>
                       <option>Department3</option>
                       <option>Department4</option>
@@ -219,7 +228,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                     <select className="form-control" name="position" disabled={!editMode}
                       value={values.position}
                       id="position" onChange={handleChange}>
-                      <option>Position1</option>
+                      <option defaultValue>Position1</option>
                       <option>Position2</option>
                       <option>Position3</option>
                       <option>Position4</option>
@@ -312,7 +321,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                     }
                   </ul>
                 </div>
-                <button type="submit" hidden={!editMode} className="btn btn-primary mt-3">ADD USER</button>
+                <button type="submit" hidden={!editMode} className="btn btn-primary mt-3">{url.type.toUpperCase()} USER</button>
               </form>
             </div>
           </div>);

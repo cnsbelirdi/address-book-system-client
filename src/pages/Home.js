@@ -25,8 +25,6 @@ const Home = props => {
 
 
   const [auth, setAuth] = useAuth();
-  const navigate = useNavigate();
-
 
   useEffect(async () => {
     await getUser()
@@ -73,6 +71,8 @@ const UserHome = ({ user, timeTables }) => {
   const tableHours = [
     "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"
   ];
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -134,7 +134,7 @@ const UserHome = ({ user, timeTables }) => {
           </tbody>
         </table>
 
-        <button class="btn btn-info my-2 my-sm-0" type="submit">Update Informations</button>
+        <button class="btn btn-info my-2 my-sm-0" type="submit" onClick={() => navigate('/user/edit/' + user.username)}>Update Informations</button>
 
       </div>
     </div>
