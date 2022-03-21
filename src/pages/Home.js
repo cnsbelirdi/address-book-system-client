@@ -71,7 +71,7 @@ const UserHome = ({ user, timeTables }) => {
   const tableHours = [
     "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"
   ];
-
+  const colors = ["aqua", "darkolivegreen", "mediumvioletred", "gray", "pink", "yellowgreen", "yellow"];
   const navigate = useNavigate();
 
   return (
@@ -118,9 +118,9 @@ const UserHome = ({ user, timeTables }) => {
                       timeTables[hour].map(t => {
                         if (t.label != '') console.log(t.label != '');
                         if (t.label) {
-                          return <td>
-                            <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">MATH302</span>
-                            <div class="margin-10px-top font-size14">ONLINE</div>
+                          return <td >
+                            <span style={{ backgroundColor: colors[Math.floor(Math.random() * 5)] }} class="padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">{t.label}</span>
+                            <div class="margin-10px-top font-size14">{t.className}</div>
                           </td>
                         }
                         return <td class="bg-light-gray"></td>
