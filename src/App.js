@@ -66,20 +66,20 @@ function App() {
   }
 
   return (
-    <div class="bg-dark-white">
-      <div class="container">
+    <div className="bg-dark-white">
+      <div className="container">
         {/* -- HEADER -- */}
-        <header class="navbar  justify-content-between">
-          <Link to="/"><img class="logo" src="https://uskudar.edu.tr/assets/kurumsal/logo-en/png/uskudar-university-logo.png" /></Link>
+        <header className="navbar  justify-content-between">
+          <Link to="/"><img className="logo" src="https://uskudar.edu.tr/assets/kurumsal/logo-en/png/uskudar-university-logo.png" /></Link>
           <h5>Uskudar University Address Book</h5>
           {
-            loggedIn && <button class="btn btn-info-light my-2 my-sm-0" onClick={logout}>Logout</button>
+            loggedIn && <button className="btn btn-info-light my-2 my-sm-0" onClick={logout}>Logout</button>
 
           }
           {
             !loggedIn && <div className='d-flex flex-row'>
-              <button class="btn btn-info-light my-2 my-sm-0" onClick={() => navigate('/login')}>Login</button>
-              <button class="btn btn-info-light my-2 my-sm-0 ml-3" onClick={() => navigate('/register')}>Register</button>
+              <button className="btn btn-info-light my-2 my-sm-0" onClick={() => navigate('/login')}>Login</button>
+              <button className="btn btn-info-light my-2 my-sm-0 ml-3" onClick={() => navigate('/register')}>Register</button>
             </div>
 
           }
@@ -88,7 +88,6 @@ function App() {
         {/*  -- NAVBAR -- */}
         <Navbar role={auth.role} />
         <Routes>
-
           <Route path='/' element={<Home />} />
           <Route path='/add' element={<Add />} />
           <Route path='/viewAll' element={<ViewAll />} />

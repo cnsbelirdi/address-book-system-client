@@ -107,7 +107,7 @@ const UserHome = ({ user, timeTables }) => {
           }
           <div class="row">
             <div class="col-sm-12">
-              <a class="btn btn-info" onClick={() => navigate('/user/edit/' + user.username)}>Edit Informations</a>
+              <a class="btn btn-info-light" onClick={() => navigate('/user/edit/' + user.username)}>Edit Informations</a>
             </div>
           </div>
         </div>

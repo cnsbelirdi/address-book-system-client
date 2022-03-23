@@ -33,7 +33,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
     "name": "",
     "username": "",
     "password": "",
-    "role": "Student",
+    "role": "Human Resources",
     "department": "Department1",
     "position": "Position1",
     "phoneNumber": 0,
@@ -132,9 +132,14 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
               .then(res => result = res)
               .catch(e => console.log(e));
 
-            console.log(result)
+            if (username === auth.username) {
+              navigate('/');
+              return;
+            }
           }
-          navigate('/viewAll');
+
+          navigate('/viewAll')
+
         }
       }}
     >
@@ -178,9 +183,13 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                     <select className="form-control" disabled={!editMode}
                       value={values.role}
                       name="role" id="role" onChange={handleChange}>
-                      <option defaultValue>Student</option>
-                      <option>Employee</option>
-                      <option>Human Resources</option>
+                      {
+                        url !== REGISTER_URL && <option>Student</option>
+                      }
+                      {
+                        url !== REGISTER_URL && <option>Employee</option>
+                      }
+                      <option defaultValue>Human Resources</option>
                     </select>
                   </div>
                 </div>

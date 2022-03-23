@@ -4,6 +4,7 @@ import { useState } from "react";
 import ValidationLabel from "../../components/ValidationLabel";
 import { useAuth } from "../../contexts/AuthContext";
 import * as Yup from 'yup';
+import { useNavigate } from "react-router-dom";
 
 const Login = props => {
 
@@ -11,6 +12,7 @@ const Login = props => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
 
 
   const LoginSchema = Yup.object().shape({
@@ -50,7 +52,7 @@ const Login = props => {
                 localStorage.setItem('jwt', `Bearer ${result.data.jwt}`);
 
                 setMessage('Successful!');
-
+                navigate('/');
                 return;
               }
               console.log(result);
@@ -62,7 +64,7 @@ const Login = props => {
           {
             ({ errors, handleChange, handleSubmit, values }) => {
               return (
-                <form onSubmit={handleSubmit}>
+                <form>
                   <div className="form-column">
                     <div className="form-group col-md-6">
                       <ValidationLabel tag="Username" message={errors.username} />
@@ -77,15 +79,19 @@ const Login = props => {
                         onChange={handleChange} value={values.name}
                         id="password" placeholder="Enter Password" />
                     </div>
-                    <button type="submit" className="btn btn-info-light ml-3">Login</button>
+                    <button type="button" onClick={handleSubmit} className="btn btn-info-light ml-3">Login</button>
                   </div>
                 </form>
               )
             }
           }
         </Formik>
+
+        {
+          message && <div className="text-danger font-italic ml-3 mt-3">({message}*)</div>
+        }
+
       </div>
-      {message != '' && <p>{message}</p>}
     </div>
   );
 }

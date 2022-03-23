@@ -52,7 +52,7 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "" }) =>
                 <th scope="col">Email</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Office No</th>
-                <th scope="col" colspan="3"></th>
+                <th scope="col" colSpan="3"></th>
               </tr>
             </thead>
             <tbody>
