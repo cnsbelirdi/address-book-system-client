@@ -73,7 +73,8 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
           let t = [];
           for (let i = 0; i < response.data.timeTable.length; i++) {
             t.push({
-              id: i, ...response.data.timeTable[i]
+              id: i,
+              ...response.data.timeTable[i]
             });
           }
           setTimeTable(t);

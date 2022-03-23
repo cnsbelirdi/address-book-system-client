@@ -24,7 +24,7 @@ const ListCourses = props => {
                       <span class="" > {days[t.dayOfWeek]} </span>
                     </div>
                     <div class="col-2">
-                      <span class="" > {t.hour} </span>
+                      <span class="" > {t.hour.slice(0, 5)} </span>
                     </div>
                     <div class="col-1">
                       <button class=" btn btn-danger btn-sm" type="button" hidden={!props.editMode} onClick={(e) => props.removeFromTable(t.id)}>&#10008;</button>

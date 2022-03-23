@@ -50,12 +50,12 @@ const Home = props => {
 
 
   return (
-    <div class="card bg-light mt-2 mb-2" >
-      <div class="card-body">
+    <div className="card bg-light mt-2 mb-2" >
+      <div className="card-body">
         {
           auth.username != '' ? <UserHome user={user} timeTables={timeTables} />
             : <div>
-              <h5 class="card-title">Welcome to Uskudar University Address Book!</h5>
+              <h5 className="card-title">Welcome to Uskudar University Address Book!</h5>
               <Login />
             </div>
         }
@@ -74,35 +74,65 @@ const UserHome = ({ user, timeTables }) => {
   const colors = ["aqua", "darkolivegreen", "mediumvioletred", "gray", "pink", "yellowgreen", "yellow"];
   const navigate = useNavigate();
 
+  const titleValuePairs = [
+    { title: "Full Name", value: "name" },
+    { title: "Department", value: "department" },
+    { title: "Position", value: "position" },
+    { title: "Phone Number", value: "phoneNo" },
+    { title: "E-mail", value: "email" },
+    { title: "Office no", value: "officeNo" },
+    { title: "Role", value: "role" }
+  ]
+
   return (
     <div>
-      <h5 class="card-title">Welcome to Uskudar University Address Book, {user.name}!</h5>
-      {/* <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --> */}
-      <p class="card-text">Name : {user.name}</p>
-      <p class="card-text">Role : {user.role}</p>
-      <p class="card-text">Department : {user.department}</p>
-      <p class="card-text">Position : {user.position}</p>
-      <p class="card-text">Phone Number : {user.phoneNo}</p>
-      <p class="card-text">E-mail : {user.email}</p>
-      <p class="card-text">Office No : {user.officeNo}</p>
-      <p class="card-text">Time Table:</p>
+      <h5 className="card-title">Welcome to Uskudar University Address Book, {user.name}!</h5>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          {
+            titleValuePairs.map(i => {
+              return (
+                <div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">{i.title}</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">{user[i.value]}</div>
+                  </div>
+                  <hr />
+                </div>
+              );
+            })
+          }
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="btn btn-info" onClick={() => navigate('/user/edit/' + user.username)}>Edit Informations</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <h5 className="card-text">Time Table</h5>
 
       {/* <!-- TIME TABLE--> */}
 
-      <div class="table-responsive">
-        <table class="table table-bordered text-center">
+      <div className="table-responsive">
+        <table className="table table-bordered text-center">
 
           {/* <!-- COLS --> */}
           <thead>
-            <tr class="bg-light-gray">
-              <th class="text-uppercase">Time
+            <tr className="bg-light-gray">
+              <th className="text-uppercase">Time
               </th>
-              <th class="text-uppercase">Monday</th>
-              <th class="text-uppercase">Tuesday</th>
-              <th class="text-uppercase">Wednesday</th>
-              <th class="text-uppercase">Thursday</th>
-              <th class="text-uppercase">Friday</th>
-              <th class="text-uppercase">Saturday</th>
+              <th className="text-uppercase">Monday</th>
+              <th className="text-uppercase">Tuesday</th>
+              <th className="text-uppercase">Wednesday</th>
+              <th className="text-uppercase">Thursday</th>
+              <th className="text-uppercase">Friday</th>
+              <th className="text-uppercase">Saturday</th>
             </tr>
           </thead>
 
@@ -114,29 +144,25 @@ const UserHome = ({ user, timeTables }) => {
 
                 return (
                   <tr>
-                    <td class="align-middle">{hour}</td>
+                    <td className="align-middle">{hour}</td>
                     {
                       timeTables[hour].map(t => {
                         if (t.label != '') console.log(t.label != '');
                         if (t.label) {
                           return <td >
-                            <span style={{ backgroundColor: colors[Math.floor(Math.random() * 5)] }} class="padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">{t.label}</span>
-                            <div class="margin-10px-top font-size14">{t.className}</div>
+                            <span style={{ backgroundColor: colors[Math.floor(Math.random() * 5)] }} className="padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">{t.label}</span>
+                            <div className="margin-10px-top font-size14">{t.className}</div>
                           </td>
                         }
-                        return <td class="bg-light-gray"></td>
+                        return <td className="bg-light-gray"></td>
                       })
                     }
                   </tr>
                 )
               })
             }
-
           </tbody>
         </table>
-
-        <button class="btn btn-info-light my-2 my-sm-0" type="submit" onClick={() => navigate('/user/edit/' + user.username)}>Update Informations</button>
-
       </div>
     </div>
   );
