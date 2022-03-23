@@ -178,26 +178,29 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                       onChange={handleChange} value={values.name}
                       id="name" placeholder="Enter name & surname" />
                   </div>
-
-                  <div className="form-group col-md-6" hidden={!includeUserDetails}>
-                    <ValidationLabel tag="Username" message={errors.username} />
-                    <input type="text" className="form-control" disabled={!editMode}
-                      onChange={handleChange} value={values.username}
-                      id="username" placeholder="Username" />
-                  </div>
-                  <div className="form-group col-md-6" hidden={!includeUserDetails}>
-                    <ValidationLabel tag="Password" message={errors.password} />
-                    <input type="password" className="form-control" disabled={!editMode}
-                      onChange={handleChange} value={values.password}
-                      id="password" placeholder="Password" />
-                  </div>
                   <div className="form-group col-md-6">
                     <ValidationLabel tag="Email" message={errors.email} />
                     <input type="email" className="form-control" disabled={!editMode}
                       onChange={handleChange} value={values.email}
                       id="email" placeholder="Email" />
                   </div>
-                  <div className="form-group col-md-12">
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group col-md-4" hidden={!includeUserDetails}>
+                    <ValidationLabel tag="Username" message={errors.username} />
+                    <input type="text" className="form-control" disabled={!editMode}
+                      onChange={handleChange} value={values.username}
+                      id="username" placeholder="Username" />
+                  </div>
+                  <div className="form-group col-md-4" hidden={!includeUserDetails}>
+                    <ValidationLabel tag="Password" message={errors.password} />
+                    <input type="password" className="form-control" disabled={!editMode}
+                      onChange={handleChange} value={values.password}
+                      id="password" placeholder="Password" />
+                  </div>
+                  
+                  <div className="form-group col-md-4">
                     <ValidationLabel tag="Role" message={errors.role} />
                     <select className="form-control" disabled={!editMode}
                       value={values.role}
@@ -264,7 +267,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                         <option>Numerical Analysis</option>
                       </select>
                     </div>
-                    <div className="form-group col-md-4">
+                    <div className="form-group col-md-2">
                       <label htmlFor="time">Course Time</label>
                       <select className="form-control" id="time" name="time" onChange={handleCourseSelect}>
                         <option defaultValue>09:00</option>
@@ -280,8 +283,8 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                       </select>
                     </div>
 
-                    <div className="form-group col-md-4">
-                      <label htmlFor="day">Course Time</label>
+                    <div className="form-group col-md-2">
+                      <label htmlFor="day">Course Day</label>
                       <select className="form-control" id="day" name="day" onChange={handleCourseSelect}>
                         <option value={0} defaultValue>Monday</option>
                         <option value={1}>Tuesday</option>
@@ -292,7 +295,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                       </select>
                     </div>
                     <div className="form-group col-md-2">
-                      <button className="mt-4_5 btn btn-primary" id="addCourse" type="button" onClick={addTimeTable}>&#10010;</button>
+                      <button className="mt-4_5 btn btn-info-light" id="addCourse" type="button" onClick={addTimeTable}>&#10010;</button>
                     </div>
                   </div>
                 </div>
@@ -312,7 +315,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                                 <span class="" > {t.hour} </span>
                               </div>
                               <div class="col-1">
-                                <button class=" btn btn-primary btn-sm" onClick={(e) => removeFromTable(t.id)}>&#10008;</button>
+                                <button class=" btn btn-danger btn-sm" onClick={(e) => removeFromTable(t.id)}>&#10008;</button>
                               </div>
                             </div>
                           </li>
@@ -321,7 +324,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                     }
                   </ul>
                 </div>
-                <button type="submit" hidden={!editMode} className="btn btn-primary mt-3">{url.type.toUpperCase()} USER</button>
+                <button type="submit" hidden={!editMode} className="btn btn-info-light mt-3">{url.type.toUpperCase()} USER</button>
               </form>
             </div>
           </div>);

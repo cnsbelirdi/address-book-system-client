@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-info-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,7 +34,7 @@ const Navbar = () => {
           </ul>
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onInput={(e) => setSearchText(e.target.value)} />
-            <select class="mr-2" onChange={(e) => setSearchType(e.target.value)}>
+            <select class="form-control mr-sm-2" onChange={(e) => setSearchType(e.target.value)}>
               <option defaultValue value="name">Name</option>
               <option value="department">Department</option>
             </select>

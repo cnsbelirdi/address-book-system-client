@@ -52,9 +52,7 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "" }) =>
                 <th scope="col">Email</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Office No</th>
-                <th scope="col">Time Table</th>
-                <th scope="col" ></th>
-                <th scope="col" ></th>
+                <th scope="col" colspan="3"></th>
               </tr>
             </thead>
             <tbody>
@@ -69,12 +67,12 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "" }) =>
                     <td>{user.email}</td>
                     <td>{user.phoneNo}</td>
                     <td>{user.officeNo}</td>
-                    <td><button class="btn btn-info my-1 my-sm-0" onClick={() => navigate("/user/" + user.username)}>View</button></td>
+                    <td><button class="btn btn-info-light my-sm-0" onClick={() => navigate("/user/" + user.username)}>View</button></td>
                     <td>
-                      <button class="btn btn-danger my-1 my-sm-0" type="submit" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => deleteUser(user.username)}>Delete</button>
+                      <button class="btn btn-primary my-sm-0" type="submit" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => navigate('/user/edit/' + user.username)}>Update</button>
                     </td>
                     <td>
-                      <button class="btn btn-success my-1 my-sm-0" type="submit" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => navigate('/user/edit/' + user.username)}>Update</button>
+                      <button class="btn btn-danger my-sm-0" type="submit" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => deleteUser(user.username)}>Delete</button>
                     </td>
                   </tr>);
                 })

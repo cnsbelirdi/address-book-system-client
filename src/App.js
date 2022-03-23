@@ -66,20 +66,20 @@ function App() {
   }
 
   return (
-    <div class="bg-info-light">
+    <div class="bg-dark-white">
       <div class="container">
         {/* -- HEADER -- */}
         <header class="navbar  justify-content-between">
           <Link to="/"><img class="logo" src="https://uskudar.edu.tr/assets/kurumsal/logo-en/png/uskudar-university-logo.png" /></Link>
-          <h5 class="text-light">Uskudar University Address Book</h5>
+          <h5>Uskudar University Address Book</h5>
           {
-            loggedIn && <button class="btn btn-info my-2 my-sm-0" onClick={logout}>Logout</button>
+            loggedIn && <button class="btn btn-info-light my-2 my-sm-0" onClick={logout}>Logout</button>
 
           }
           {
             !loggedIn && <div className='d-flex flex-row'>
-              <button class="btn btn-info my-2 my-sm-0" onClick={() => navigate('/login')}>Login</button>
-              <button class="btn btn-info my-2 my-sm-0 ml-3" onClick={() => navigate('/register')}>Register</button>
+              <button class="btn btn-info-light my-2 my-sm-0" onClick={() => navigate('/login')}>Login</button>
+              <button class="btn btn-info-light my-2 my-sm-0 ml-3" onClick={() => navigate('/register')}>Register</button>
             </div>
 
           }

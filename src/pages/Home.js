@@ -79,6 +79,7 @@ const UserHome = ({ user, timeTables }) => {
       <h5 class="card-title">Welcome to Uskudar University Address Book, {user.name}!</h5>
       {/* <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --> */}
       <p class="card-text">Name : {user.name}</p>
+      <p class="card-text">Role : {user.role}</p>
       <p class="card-text">Department : {user.department}</p>
       <p class="card-text">Position : {user.position}</p>
       <p class="card-text">Phone Number : {user.position}</p>
@@ -134,7 +135,7 @@ const UserHome = ({ user, timeTables }) => {
           </tbody>
         </table>
 
-        <button class="btn btn-info my-2 my-sm-0" type="submit" onClick={() => navigate('/user/edit/' + user.username)}>Update Informations</button>
+        <button class="btn btn-info-light my-2 my-sm-0" type="submit" onClick={() => navigate('/user/edit/' + user.username)}>Update Informations</button>
 
       </div>
     </div>
