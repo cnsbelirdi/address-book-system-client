@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { useState } from "react";
 import ValidationLabel from "../ValidationLabel";
 
-const TimeTable = ({ editMode, addToTimeTable }) => {
+const TimeTable = ({ editMode, addToTimeTable, timeTableLen }) => {
 
   const takeFirstLetters = course => {
     let courses = course.split(' ');
@@ -16,12 +16,10 @@ const TimeTable = ({ editMode, addToTimeTable }) => {
     return label;
   }
 
-
-
   const TimetableSchema = Yup.object().shape({
-    time: Yup.string().required("Hour must be selected!"),
-    day: Yup.number().required("Day must be selected"),
-    course: Yup.string().required("Course must be selected!"),
+    hour: Yup.string().required("Hour must be selected!"),
+    dayOfWeek: Yup.number().required("Day must be selected"),
+    className: Yup.string().required("Course must be selected!"),
     label: Yup.string().required("Label must be selected!")
   });
 
@@ -30,13 +28,15 @@ const TimeTable = ({ editMode, addToTimeTable }) => {
     <div>
       <Formik
         initialValues={{
-          time: "09:00",
-          day: 0,
-          course: "Software Project Management",
-          label: "SPM"
+          hour: "09:00",
+          dayOfWeek: 0,
+          className: "Software Project Management",
+          label: "SPM",
+          id: 0
         }}
         onSubmit={(values) => {
           values.label = takeFirstLetters(values.course);
+          values.id = timeTableLen();
           addToTimeTable(values);
         }}
         validationSchema={TimetableSchema}
@@ -52,7 +52,6 @@ const TimeTable = ({ editMode, addToTimeTable }) => {
 
                     <select className="form-control" id="courses" name="course" onChange={(e) => {
                       handleTimeChange(e);
-                      console.log(takeFirstLetters(e.target.value));
                     }}>
                       <option>Software Project Management</option>
                       <option>Object Oriented Programming II</option>
@@ -89,11 +88,10 @@ const TimeTable = ({ editMode, addToTimeTable }) => {
                     </select>
                   </div>
                   <div className="form-group col-md-2">
-                    <button className="mt-4_5 btn btn-info-light" id="addCourse" onClick={submitForm} >&#10010;</button>
+                    <button className="mt-4_5 btn btn-info-light" type="button" id="addCourse" onClick={submitForm} >&#10010;</button>
                   </div>
                 </div>
               </div>
-
             );
           }
         }

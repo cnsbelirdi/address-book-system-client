@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ListCourses = props => {
   const [timeTable, setTimeTable] = useState(props.timeTable);
-  function removeFromTable(id) {
-    setTimeTable(prev => {
-      return prev.filter(t => t.id != id);
-    });
-  }
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  useEffect(() => {
+    setTimeTable(props.timeTable);
+  }, [props.timeTable])
 
   return (
     <div>
@@ -18,13 +18,16 @@ const ListCourses = props => {
                 <li class="py-3 shadow list-group-item" key={t.id}>
                   <div class="row">
                     <div class="col-6">
-                      <span class="" > {t.className} </span>
+                      <span class="" > {t.className} ({t.label})</span>
                     </div>
-                    <div class="col-5">
+                    <div class="col-3">
+                      <span class="" > {days[t.dayOfWeek]} </span>
+                    </div>
+                    <div class="col-2">
                       <span class="" > {t.hour} </span>
                     </div>
                     <div class="col-1">
-                      <button class=" btn btn-danger btn-sm" onClick={(e) => removeFromTable(t.id)}>&#10008;</button>
+                      <button class=" btn btn-danger btn-sm" type="button" hidden={!props.editMode} onClick={(e) => props.removeFromTable(t.id)}>&#10008;</button>
                     </div>
                   </div>
                 </li>
