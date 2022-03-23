@@ -12,7 +12,6 @@ const ListCourses = props => {
     <div>
       <div className="card" style={{ minHeight: "60px" }}>
         <ul className="list-group" id="list">
-
           {
             timeTable.map(t => {
               return (
@@ -25,7 +24,7 @@ const ListCourses = props => {
                       <span class="" > {t.hour} </span>
                     </div>
                     <div class="col-1">
-                      <button class=" btn btn-primary btn-sm" onClick={(e) => removeFromTable(t.id)}>&#10008;</button>
+                      <button class=" btn btn-danger btn-sm" onClick={(e) => removeFromTable(t.id)}>&#10008;</button>
                     </div>
                   </div>
                 </li>

@@ -61,7 +61,7 @@ const TimeTable = ({ editMode, addToTimeTable }) => {
                       <option>Numerical Analysis</option>
                     </select>
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className="form-group col-md-2">
                     <ValidationLabel tag="Course Time" message={errors.time} />
                     <select className="form-control" id="time" name="time" onChange={handleTimeChange}>
                       <option>09:00</option>
@@ -77,7 +77,7 @@ const TimeTable = ({ editMode, addToTimeTable }) => {
                     </select>
                   </div>
 
-                  <div className="form-group col-md-4">
+                  <div className="form-group col-md-2">
                     <ValidationLabel tag="Course Day" message={errors.day} />
                     <select className="form-control" id="day" name="day" onChange={handleTimeChange} typeof="number">
                       <option value={0}>Monday</option>
@@ -89,10 +89,11 @@ const TimeTable = ({ editMode, addToTimeTable }) => {
                     </select>
                   </div>
                   <div className="form-group col-md-2">
-                    <button className="mt-4_5 btn btn-primary" id="addCourse" onClick={submitForm} >&#10010;</button>
+                    <button className="mt-4_5 btn btn-info-light" id="addCourse" onClick={submitForm} >&#10010;</button>
                   </div>
                 </div>
               </div>
+
             );
           }
         }

@@ -77,7 +77,7 @@ const Login = props => {
                         onChange={handleChange} value={values.name}
                         id="password" placeholder="Enter Password" />
                     </div>
-                    <button type="submit" className="btn btn-warning ml-3">Login</button>
+                    <button type="submit" className="btn btn-info-light ml-3">Login</button>
                   </div>
                 </form>
               )
