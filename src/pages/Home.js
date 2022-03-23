@@ -82,7 +82,7 @@ const UserHome = ({ user, timeTables }) => {
       <p class="card-text">Role : {user.role}</p>
       <p class="card-text">Department : {user.department}</p>
       <p class="card-text">Position : {user.position}</p>
-      <p class="card-text">Phone Number : {user.position}</p>
+      <p class="card-text">Phone Number : {user.phoneNo}</p>
       <p class="card-text">E-mail : {user.email}</p>
       <p class="card-text">Office No : {user.officeNo}</p>
       <p class="card-text">Time Table:</p>

@@ -27,7 +27,9 @@ button.bg-info-light:focus,button.bg-info-light:hover{background-color:#07948f!i
     background-color: #f7f7f7;
 }
 
-
+.bg-dark-white{
+	background-color: #E5EBEA;
+}
 
 
 
