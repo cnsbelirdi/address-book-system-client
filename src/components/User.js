@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from 'yup';
 import ValidationLabel from "./ValidationLabel";
 import { useAuth } from "../contexts/AuthContext";
+import TimeTable from "./timetable/TimeTable";
+import ListCourses from "./timetable/ListCourses";
 
 export const EDIT_URL = {
   url: "api/book_user/",
@@ -25,11 +27,7 @@ export const VIEW_URL = {
 }
 
 const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL, title = "Register" }) => {
-  const [timeTable, setTimeTable] = useState([]);
-  const [course, setCourse] = useState('');
   const [auth, setAuth] = useAuth();
-  const [day, setDay] = useState(0);
-  const [time, setTime] = useState('');
   const { username } = useParams();
   const [initialValues, setInitialValues] = useState({
     "name": "",
@@ -44,6 +42,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
     "timeTable": []
   });
   const navigate = useNavigate();
+  const [timeTable, setTimeTable] = useState([]);
 
 
   const UserSchema = Yup.object().shape({
@@ -62,6 +61,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
     email: Yup.string().email('Invalid email').required('Email is required'),
   });
 
+
   // Get user infos for update and view in beginning
   useEffect(async () => {
     if (url.type == VIEW_URL.type || url.type == EDIT_URL.type) {
@@ -70,57 +70,20 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
         await axios.get(url.url + username).then(res => response = res).catch(e => console.log(e));
         if (response.status === 200) {
           setInitialValues(response.data);
-
-          let table = [];
-
+          let t = [];
           for (let i = 0; i < response.data.timeTable.length; i++) {
-            table.push({ id: i, ...response.data.timeTable[i] });
+            t.push({ id: i, ...response.data.timeTable[i] });
           }
-
-          setTimeTable(table);
+          setTimeTable(t);
         }
       }
     }
   }, [])
 
 
-  function handleCourseSelect(e) {
-    let value = e.target.value;
-
-    switch (e.target.name) {
-      case "course":
-        setCourse(value);
-        break;
-      case "time":
-        setTime(value);
-        break;
-      case "day":
-        setDay(value);
-        break;
-      default:
-        break;
-    }
-  }
-
-
-  function addTimeTable() {
-    if (day && time && course) {
-      let newTime = {
-        id: timeTable.length,
-        dayOfWeek: day,
-        hour: time,
-        className: course,
-        label: 'SMP-101' // sample
-      }
-
-      setTimeTable([newTime, ...timeTable]);
-    }
-  }
-
-  function removeFromTable(id) {
-    setTimeTable(prev => {
-      return prev.filter(t => t.id != id);
-    });
+  function addToTimeTable(value) {
+    setTimeTable(prev => [value, ...prev]);
+    console.log(timeTable);
   }
 
   return (
@@ -251,76 +214,9 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                   </div>
                 </div>
 
-                {/* Time Tables */}
-                <div className="timetable" hidden={!editMode}>
-                  <div className="form-row">
-                    <div className="form-group col-md-6">
-                      <label htmlFor="courses">Courses</label>
-                      <select className="form-control" id="courses" name="course" onChange={handleCourseSelect}>
-                        <option defaultValue>Software Project Management</option>
-                        <option>Object Oriented Programming II</option>
-                        <option>Software Construction</option>
-                        <option>Spanish II</option>
-                        <option>Numerical Analysis</option>
-                      </select>
-                    </div>
-                    <div className="form-group col-md-4">
-                      <label htmlFor="time">Course Time</label>
-                      <select className="form-control" id="time" name="time" onChange={handleCourseSelect}>
-                        <option defaultValue>09:00</option>
-                        <option>10:00</option>
-                        <option>11:00</option>
-                        <option>12:00</option>
-                        <option>13:00</option>
-                        <option>14:00</option>
-                        <option>15:00</option>
-                        <option>16:00</option>
-                        <option>17:00</option>
-                        <option>18:00</option>
-                      </select>
-                    </div>
-
-                    <div className="form-group col-md-4">
-                      <label htmlFor="day">Course Time</label>
-                      <select className="form-control" id="day" name="day" onChange={handleCourseSelect}>
-                        <option value={0} defaultValue>Monday</option>
-                        <option value={1}>Tuesday</option>
-                        <option value={2}>Wednesday</option>
-                        <option value={3}>Thursday</option>
-                        <option value={4}>Friday</option>
-                        <option value={5}>Saturday</option>
-                      </select>
-                    </div>
-                    <div className="form-group col-md-2">
-                      <button className="mt-4_5 btn btn-primary" id="addCourse" type="button" onClick={addTimeTable}>&#10010;</button>
-                    </div>
-                  </div>
-                </div>
+                <TimeTable editMode={editMode} addToTimeTable={addToTimeTable} />
                 <label htmlFor="list">Added Courses</label>
-                <div className="card" style={{ minHeight: "60px" }}>
-                  <ul className="list-group" id="list">
-
-                    {
-                      timeTable.map(t => {
-                        return (
-                          <li class="py-3 shadow list-group-item" key={t.id}>
-                            <div class="row">
-                              <div class="col-6">
-                                <span class="" > {t.className} </span>
-                              </div>
-                              <div class="col-5">
-                                <span class="" > {t.hour} </span>
-                              </div>
-                              <div class="col-1">
-                                <button class=" btn btn-primary btn-sm" onClick={(e) => removeFromTable(t.id)}>&#10008;</button>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })
-                    }
-                  </ul>
-                </div>
+                <ListCourses timeTable={timeTable} />
                 <button type="submit" hidden={!editMode} className="btn btn-primary mt-3">{url.type.toUpperCase()} USER</button>
               </form>
             </div>
