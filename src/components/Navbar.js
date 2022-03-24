@@ -38,7 +38,7 @@ const Navbar = () => {
               <option defaultValue value="name">Name</option>
               <option value="department">Department</option>
             </select>
-            <button type="button" class="btn btn-outline-light my-2 my-sm-0" onClick={() => { window.location.href = `/search/${searchType}/${searchText}`; return; navigate(`/search/${searchType}/${searchText}`); }}>Search</button>
+            <button type="button" id="searchButton" class="btn btn-outline-light my-2 my-sm-0" onClick={() => { window.location.href = `/search/${searchType}/${searchText}`; }}>Search</button>
           </form>
         </div>
       </nav>

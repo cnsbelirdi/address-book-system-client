@@ -27,7 +27,7 @@ const ListCourses = props => {
                       <span class="" > {t.hour.slice(0, 5)} </span>
                     </div>
                     <div class="col-1">
-                      <button class=" btn btn-danger btn-sm" type="button" hidden={!props.editMode} onClick={(e) => props.removeFromTable(t.id)}>&#10008;</button>
+                      <button class=" btn btn-danger btn-sm" id="removeTimetable" type="button" hidden={!props.editMode} onClick={(e) => props.removeFromTable(t.id)}>&#10008;</button>
                     </div>
                   </div>
                 </li>

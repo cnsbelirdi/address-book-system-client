@@ -79,7 +79,7 @@ const Login = props => {
                         onChange={handleChange} value={values.name}
                         id="password" placeholder="Enter Password" />
                     </div>
-                    <button type="button" onClick={handleSubmit} className="btn btn-info-light ml-3">Login</button>
+                    <button type="button" id="loginSubmit" onClick={handleSubmit} className="btn btn-info-light ml-3">Login</button>
                   </div>
                 </form>
               )

@@ -67,12 +67,12 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "" }) =>
                     <td>{user.email}</td>
                     <td>{user.phoneNo}</td>
                     <td>{user.officeNo}</td>
-                    <td><button class="btn btn-info-light my-sm-0" onClick={() => navigate("/user/" + user.username)}>View</button></td>
+                    <td><button class="btn btn-info-light my-sm-0" id="viewButton" onClick={() => navigate("/user/" + user.username)}>View</button></td>
                     <td>
-                      <button class="btn btn-primary my-sm-0" type="button" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => navigate('/user/edit/' + user.username)}>Update</button>
+                      <button class="btn btn-primary my-sm-0" type="button" id="editButton" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => navigate('/user/edit/' + user.username)}>Update</button>
                     </td>
                     <td>
-                      <button class="btn btn-danger my-sm-0" type="button" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => deleteUser(user.username)}>Delete</button>
+                      <button class="btn btn-danger my-sm-0" type="button" id="deleteButton" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => deleteUser(user.username)}>Delete</button>
                     </td>
                   </tr>);
                 })

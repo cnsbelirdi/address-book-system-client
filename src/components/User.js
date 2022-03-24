@@ -240,7 +240,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                 <label htmlFor="list">Added Courses</label>
                 <ListCourses timeTable={timeTable} removeFromTable={removeFromTimeTable} editMode={editMode} />
 
-                <button type="submit" hidden={!editMode} className="btn btn-info-light mt-3">{url.type.toUpperCase()} USER</button>
+                <button type="submit" id="submitUser" hidden={!editMode} className="btn btn-info-light mt-3">{url.type.toUpperCase()} USER</button>
               </form>
             </div>
           </div>);

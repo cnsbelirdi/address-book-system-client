@@ -73,13 +73,13 @@ function App() {
           <Link to="/"><img className="logo" src="https://uskudar.edu.tr/assets/kurumsal/logo-en/png/uskudar-university-logo.png" /></Link>
           <h5>Uskudar University Address Book</h5>
           {
-            loggedIn && <button className="btn btn-info-light my-2 my-sm-0" onClick={logout}>Logout</button>
+            loggedIn && <button className="btn btn-info-light my-2 my-sm-0" id="logoutRedirect" onClick={logout}>Logout</button>
 
           }
           {
             !loggedIn && <div className='d-flex flex-row'>
-              <button className="btn btn-info-light my-2 my-sm-0" onClick={() => navigate('/login')}>Login</button>
-              <button className="btn btn-info-light my-2 my-sm-0 ml-3" onClick={() => navigate('/register')}>Register</button>
+              <button className="btn btn-info-light my-2 my-sm-0" id="loginRedirect" onClick={() => navigate('/login')}>Login</button>
+              <button className="btn btn-info-light my-2 my-sm-0 ml-3" id="registerRedirect" onClick={() => navigate('/register')}>Register</button>
             </div>
 
           }
