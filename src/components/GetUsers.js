@@ -1,28 +1,34 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import * as _ from 'lodash';
 
-const GetUsers = ({ isSearch = false, type = "department", searchText = "" }) => {
+const GetUsers = ({ isSearch = false, type = "department", searchText = "", params = { page: 1, sort: "name" } }, props) => {
 
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
-  const [url, setUrl] = useState(isSearch ? `api/search/${type}/${searchText}`
-    : "api/book_user")
+  const [pageCount, setPageCount] = useState();
+  let [routeParams, setRouteParams] = useState(params);
 
   useEffect(async () => {
-    let response;
-    await axios.get(url)
-      .then(res => response = res)
+    getUsers();
+
+    let pageRes;
+
+    await axios.get('api/book_user/size')
+      .then(res => pageRes = res)
       .catch(e => console.log(e));
 
-    if (response.status == 200) {
-      setUsers(response.data);
+    if (pageRes.status == 200) {
+      const count = Math.ceil(pageRes.data.message / 5); // Each page has 5 elements
+      setPageCount(count);
     }
-  }, []);
+  }, [routeParams]);
 
-  let count = 1;
+
+  let count = 1 + (5 * ((routeParams.page ?? 1) - 1));
 
   async function deleteUser(username) {
     let res;
@@ -35,13 +41,37 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "" }) =>
     }
   }
 
+  async function getUsers() {
+
+    let p = routeParams.page ? routeParams.page - 1 : 0;
+    let s = routeParams.sort ? routeParams.sort : "name";
+
+    let url = `api/book_user?page=${p}&sort=${s}`;
+
+
+    if (isSearch) {
+      url = `api/search/${type}/${searchText}`;
+    }
+
+
+
+    let response;
+    await axios.get(url)
+      .then(res => response = res)
+      .catch(e => console.log(e));
+
+    if (response.status == 200) {
+      setUsers(response.data);
+    }
+  }
+
   return (
     <div>
-      <div class="card bg-light mt-2 mb-2">
-        <div class="card-body">
-          <h5 class="card-title">All Users</h5>
+      <div className="card bg-light mt-2 mb-2">
+        <div className="card-body">
+          <h5 className="card-title">All Users</h5>
           {/* <!-- TABLE --> */}
-          <table class="table table-hover">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -67,12 +97,12 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "" }) =>
                     <td>{user.email}</td>
                     <td>{user.phoneNo}</td>
                     <td>{user.officeNo}</td>
-                    <td><button class="btn btn-info-light my-sm-0" id="viewButton" onClick={() => navigate("/user/" + user.username)}>View</button></td>
+                    <td><button className="btn btn-info-light my-sm-0" id="viewButton" onClick={() => navigate("/user/" + user.username)}>View</button></td>
                     <td>
-                      <button class="btn btn-primary my-sm-0" type="button" id="editButton" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => navigate('/user/edit/' + user.username)}>Update</button>
+                      <button className="btn btn-primary my-sm-0" type="button" id="editButton" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => navigate('/user/edit/' + user.username)}>Update</button>
                     </td>
                     <td>
-                      <button class="btn btn-danger my-sm-0" type="button" id="deleteButton" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => deleteUser(user.username)}>Delete</button>
+                      <button className="btn btn-danger my-sm-0" type="button" id="deleteButton" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => deleteUser(user.username)}>Delete</button>
                     </td>
                   </tr>);
                 })
@@ -81,15 +111,38 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "" }) =>
           </table>
           {/* <!-- PAGINATION --> */}
           <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            <ul className="pagination justify-content-end">
+              <li className={`page-item ${routeParams.page > 1 ? "" : "disabled"}`}>
+                <a className="page-link" onClick={(e) => {
+                  navigate(`/viewAll/${routeParams.page - 1}/${routeParams.sort ?? "name"}`);
+                  setRouteParams({
+                    page: routeParams.page - 1,
+                    sort: routeParams.sort
+                  });
+                }}>Previous</a>
               </li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+              {
+                _.range(1, pageCount + 1, 1).map(p => {
+                  return <li className="page-item">
+                    <a className="page-link" onClick={(e) => {
+                      navigate(`/viewAll/${p}/${routeParams.sort ?? "name"}`);
+                      setRouteParams({
+                        page: p,
+                        sort: routeParams.sort
+                      });
+                    }}>{p}</a>
+                  </li>
+                })
+              }
+
+              <li className={`page-item ${routeParams.page < pageCount ? "" : "disabled"}`}>
+                <a className="page-link" onClick={(e) => {
+                  navigate(`/viewAll/${routeParams.page + 1}/${routeParams.sort ?? "name"}`);
+                  setRouteParams({
+                    page: routeParams.page + 1,
+                    sort: routeParams.sort
+                  });
+                }}>Next</a>
               </li>
             </ul>
           </nav>

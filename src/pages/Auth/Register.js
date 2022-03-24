@@ -11,7 +11,3 @@ const Register = props => {
   return <User includeUserDetails={true} url={REGISTER_URL} />
 }
 export default Register;
-
-// add new user -> book_user
-// register -> auth
-// edit user -> book_user/edit

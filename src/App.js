@@ -90,6 +90,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/add' element={<Add />} />
+          <Route path='/viewAll/:page/:sort' element={<ViewAll />} />
           <Route path='/viewAll' element={<ViewAll />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -97,6 +98,7 @@ function App() {
           <Route path='/user/edit/:username' element={<Edit />} />
           <Route path='/search/:type/:text' element={<Search />} />
           <Route path='/search' element={<Search />} />
+
         </Routes>
       </div>
     </div>
