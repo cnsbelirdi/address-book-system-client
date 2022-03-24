@@ -3,7 +3,6 @@ import GetUsers from "../components/GetUsers";
 
 const ViewAll = props => {
   const { page, sort } = useParams();
-
   return (
     <GetUsers params={{ page, sort }} />
   );

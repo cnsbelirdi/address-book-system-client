@@ -102,17 +102,16 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
       initialValues={initialValues}
       validationSchema={UserSchema}
       onSubmit={async values => {
+        console.log("sa");
+
         // event.preventDefault();
         if (editMode) {
           values.timeTable = timeTable;
-
           if (url.type == ADD_URL.type || url.type == REGISTER_URL.type) {
             let result;
-
             await axios.post(url.url, values)
               .then(res => result = res)
               .catch(e => console.log(e));
-
             if (result.status == 200) {
               if (url.type == REGISTER_URL.type) {
                 localStorage.setItem('jwt', "Bearer " + result.data.jwt);
@@ -120,7 +119,7 @@ const User = ({ editMode = true, includeUserDetails = false, url = REGISTER_URL,
                   username: values.username,
                   role: values.role
                 });
-                navigate('/');
+                window.location.href = "/";
                 return;
               }
             }

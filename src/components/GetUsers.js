@@ -1,16 +1,20 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState, memo } from "react";
+import { useNavigate, useParam } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import * as _ from 'lodash';
 
-const GetUsers = ({ isSearch = false, type = "department", searchText = "", params = { page: 1, sort: "name" } }, props) => {
+const GetUsers = ({ isSearch = false,
+  type = "department",
+  searchText = "",
+  params = { page: 1, sort: "name" }
+}, props) => {
 
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-  const [auth, setAuth] = useAuth();
   const [pageCount, setPageCount] = useState();
   let [routeParams, setRouteParams] = useState(params);
+  const [auth, setAuth] = useAuth();
 
   useEffect(async () => {
     getUsers();
@@ -26,7 +30,6 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "", para
       setPageCount(count);
     }
   }, [routeParams]);
-
 
   let count = 1 + (5 * ((routeParams.page ?? 1) - 1));
 
@@ -52,9 +55,6 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "", para
     if (isSearch) {
       url = `api/search/${type}/${searchText}`;
     }
-
-
-
     let response;
     await axios.get(url)
       .then(res => response = res)
@@ -99,10 +99,10 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "", para
                     <td>{user.officeNo}</td>
                     <td><button className="btn btn-info-light my-sm-0" id="viewButton" onClick={() => navigate("/user/" + user.username)}>View</button></td>
                     <td>
-                      <button className="btn btn-primary my-sm-0" type="button" id="editButton" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => navigate('/user/edit/' + user.username)}>Update</button>
+                      {auth.role === "ROLE_HUMAN RESOURCES" && <button className="btn btn-primary my-sm-0" type="button" id="editButton" onClick={() => navigate('/user/edit/' + user.username)}>Update</button>}
                     </td>
                     <td>
-                      <button className="btn btn-danger my-sm-0" type="button" id="deleteButton" hidden={auth.role != "ROLE_HUMAN RESOURCES"} onClick={() => deleteUser(user.username)}>Delete</button>
+                      {auth.role === "ROLE_HUMAN RESOURCES" && <button button className="btn btn-danger my-sm-0" type="button" id="deleteButton" onClick={() => deleteUser(user.username)}>Delete</button>}
                     </td>
                   </tr>);
                 })
@@ -148,7 +148,7 @@ const GetUsers = ({ isSearch = false, type = "department", searchText = "", para
           </nav>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 export default GetUsers;

@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
 import GetUsers from "../components/GetUsers";
+import { useAuth } from "../contexts/AuthContext";
 
 const Search = props => {
 
   const { type, text } = useParams();
-  console.log(type, text)
+  const [auth, setAuth] = useAuth();
   return (
     <div>
-      <GetUsers isSearch={true} type={type} searchText={text} />
+      <GetUsers isSearch={true} type={type} searchText={text} auth={auth} />
     </div>
   );
 }
