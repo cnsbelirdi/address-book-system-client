@@ -33,11 +33,13 @@ const Navbar = () => {
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" id="searchText" placeholder="Search" aria-label="Search" onInput={(e) => setSearchText(e.target.value)} />
-            <select class="form-control mr-sm-2" onChange={(e) => setSearchType(e.target.value)}>
-              <option defaultValue value="name" id="searchName">Name</option>
-              <option value="department" id="searchDepartment">Department</option>
-            </select>
+            <div className="input-group">
+              <input class="form-control mr-sm-2" type="search" style={{ width: "250px" }} id="searchText" placeholder="Search" aria-label="Search" onInput={(e) => setSearchText(e.target.value)} />
+              <select class="form-control mr-sm-2 custom-select" style={{ width: "120px" }} onChange={(e) => setSearchType(e.target.value)}>
+                <option defaultValue value="name" id="searchName">Name</option>
+                <option value="department" id="searchDepartment">Department</option>
+              </select>
+            </div>
             <button type="button" id="searchButton" class="btn btn-outline-light my-2 my-sm-0" onClick={() => { window.location.href = `/search/${searchType}/${searchText}`; }}>Search</button>
           </form>
         </div>
