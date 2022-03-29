@@ -44,6 +44,18 @@ const GetUsers = ({ isSearch = false,
     }
   }
 
+  const takeFirstLetters = course => {
+    let courses = course.split(' ');
+    let label = "";
+
+    courses.forEach((c) => {
+      if (c.length < 3) { label += c; return; }
+      label += c[0];
+    });
+    return label;
+  }
+
+
   async function getUsers() {
 
     let p = routeParams.page ? routeParams.page - 1 : 0;
@@ -76,7 +88,6 @@ const GetUsers = ({ isSearch = false,
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Role</th>
                 <th scope="col">Department</th>
                 <th scope="col">Position</th>
                 <th scope="col">Email</th>
@@ -90,12 +101,15 @@ const GetUsers = ({ isSearch = false,
                 users.map(user => {
                   return (<tr>
                     <th scope="row">{count++}</th>
-                    <td>{user.name}</td>
-                    <td>{user.role}</td>
+                    <td>{user.name}
+                      <i className="role-title">
+                        ({takeFirstLetters(user.role)})
+                      </i>
+                    </td>
                     <td>{user.department}</td>
                     <td>{user.position}</td>
                     <td>{user.email}</td>
-                    <td>{user.phoneNo}</td>
+                    <td>{user.phoneNumber}</td>
                     <td>{user.officeNo}</td>
                     <td><button className="btn btn-info-light my-sm-0" id="viewButton" onClick={() => navigate("/user/" + user.username)}>View</button></td>
                     <td>
